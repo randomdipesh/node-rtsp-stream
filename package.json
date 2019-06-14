@@ -1,0 +1,53 @@
+{
+  "_from": "node-rtsp-stream-es6",
+  "_id": "node-rtsp-stream-es6@1.0.6",
+  "_inBundle": false,
+  "_integrity": "sha1-PbN/Ge38Tyhf2Fnuxp7SbVzazko=",
+  "_location": "/node-rtsp-stream-es6",
+  "_phantomChildren": {},
+  "_requested": {
+    "type": "tag",
+    "registry": true,
+    "raw": "node-rtsp-stream-es6",
+    "name": "node-rtsp-stream-es6",
+    "escapedName": "node-rtsp-stream-es6",
+    "rawSpec": "",
+    "saveSpec": null,
+    "fetchSpec": "latest"
+  },
+  "_requiredBy": [
+    "#USER",
+    "/"
+  ],
+  "_resolved": "https://registry.npmjs.org/node-rtsp-stream-es6/-/node-rtsp-stream-es6-1.0.6.tgz",
+  "_shasum": "3db37f19edfc4f285fd859eec69ed26d5cdace4a",
+  "_spec": "node-rtsp-stream-es6",
+  "_where": "/home/dps/camera",
+  "author": {
+    "name": "Wifsimster"
+  },
+  "bugs": {
+    "url": "https://github.com/Wifsimster/node-rtsp-stream-es6/issues"
+  },
+  "bundleDependencies": false,
+  "dependencies": {
+    "jsmpeg": "^1.0.0",
+    "ws": "^1.1.1"
+  },
+  "deprecated": false,
+  "description": "RTSP stream through WebSocket",
+  "homepage": "https://github.com/Wifsimster/node-rtsp-stream-es6#readme",
+  "licenses": [
+    {
+      "type": "MIT",
+      "url": "https://github.com/brentertz/scapegoat/blob/master/LICENSE-MIT"
+    }
+  ],
+  "main": "index.js",
+  "name": "node-rtsp-stream-es6",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Wifsimster/node-rtsp-stream-es6.git"
+  },
+  "version": "1.0.6"
+}
