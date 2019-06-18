@@ -16,25 +16,26 @@ class VideoStream extends EventEmitter {
     this.stream2Socket()
   }
 
-  stream2Socket() {    
-    const server = new WebSocket.Server({ port: this.port })
-    server.on('connection', (socket) => {
+  stream2Socket() {
+    this.server = new WebSocket.Server({ port: this.port })
+    this.server.on('connection', (socket) => {
 
       console.log(`New connection: ${this.name}`)
 
       let streamHeader = new Buffer(8)
       streamHeader.write(STREAM_MAGIC_BYTES)
       streamHeader.writeUInt16BE(this.width, 4)
-      streamHeader.writeUInt16BE(this.height, 6)      
+      streamHeader.writeUInt16BE(this.height, 6)
       socket.send(streamHeader)
 
-      this.on('camdata', (data) => {
-        server.clients.forEach((client) => {
-          if(client.readyState === WebSocket.OPEN) { client.send(data) }
-        })
-      })
-
       socket.on('close', () => { console.log(`${this.name} disconnected !`) })
+    })
+
+    this.on('camdata', (data) => {
+      for (let i in this.server.clients) {
+        let client = this.server.clients[i]
+        if(client.readyState === WebSocket.OPEN) { client.send(data) }
+      }
     })
   }
 
@@ -50,8 +51,8 @@ class VideoStream extends EventEmitter {
     })
   }
 
-  start() {    
-    this.mpeg1Muxer = new Mpeg1Muxer({ url: this.url })    
+  start() {
+    this.mpeg1Muxer = new Mpeg1Muxer({ url: this.url })
     this.mpeg1Muxer.on('mpeg1data', (data) => { return this.emit('camdata', data) })
 
     let gettingInputData = false
@@ -79,6 +80,16 @@ class VideoStream extends EventEmitter {
     })
     this.mpeg1Muxer.on('ffmpegError', (data) => { return global.process.stderr.write(data) })
     return this
+  }
+
+  stop(serverCloseCallback) {
+    this.server.close(serverCloseCallback)
+    this.server.removeAllListeners()
+    this.server = undefined
+
+    this.mpeg1Muxer.stop()
+    this.mpeg1Muxer.removeAllListeners()
+    this.mpeg1Muxer = undefined
   }
 }
 
